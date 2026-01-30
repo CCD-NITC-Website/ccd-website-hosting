@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
         color: '#2c3e50', 
         borderBottom: '2px solid #3498db', 
         paddingBottom: '10px',
-        marginBottom: '25px',
+        marginBottom: '25px',https://github.com/CCD-NITC-Website/ccd-website-hosting/pull/73/conflict?name=src%252Fcomponents%252FTermsandCondition.js&base_oid=fc5e926a0956289bc5202eaf35c29c0f13db8697&head_oid=56d0a11e4d15b17efe132a307da5b5b087658f51
         fontSize: '2.2rem',
         fontWeight: '600'
       }}>Privacy Policy</h1>

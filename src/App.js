@@ -2,7 +2,12 @@ import './App.css';
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import AnimatedCursor from "react-animated-cursor";
+import { ErrorBoundary } from 'react-error-boundary';
 import Loader from './pages/Loader';
+
+// Error boundary fallback component
+// Regularly imported components (non-lazy)
+import DepartmentSIP from './components/Department_sip.js';
 import SummerInternInstr from './components/SummerInternInstr';
 import SummerInternship from './components/SummerInternship.js';
 import TermsAndConditions from './components/TermsandCondition.js';
@@ -29,15 +34,24 @@ const Admin = lazy(() => import('./pages/Admin'));
 const ForRecruiter = lazy(() => import('./components/ForRecruiter'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Results = lazy(() => import('./components/Results'));
-// import Temp2 from './components/Temp2';
-// import Temp from './components/Temp';
-// const Temp=lazy(()=>import('./components/Temp'));
-const Temp2=lazy(()=>import('./components/Temp2'));
+const Temp2 = lazy(() => import('./components/Temp2'));
 const MentorFilter = lazy(() => import('./components/MentorFilter'));
+
+function ErrorFallback({ error }) {
+  return (
+    <div role="alert" className="error-fallback">
+      <h2>Something went wrong</h2>
+      <pre>{error.message}</pre>
+      <button onClick={() => window.location.reload()}>Try again</button>
+    </div>
+  );
+}
+
 
 function App() {
   const { pathname } = useLocation();
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [hashMap, setHashMap] = useState({});
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -62,6 +76,23 @@ function App() {
     }
   };
 
+  // List of routes where Navbar and Footer should NOT be shown
+  const noNavFooterRoutes = [
+    '/professor_dashboard',
+    '/CandidatePreferences',
+    '/candidatePreferences',
+    '/candidatepreferences',
+    '/candidate_profile',
+    '/Candidatedashboard',
+    '/candidatedashboard',
+    '/department_sip',
+    '/generate_id',
+    '/admin_sip',
+    "/download_documents",
+    "/candidate_projectreport",
+  ];
+  const hideNavFooter = noNavFooterRoutes.includes(pathname);
+
   return (
     <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
       <AnimatedCursor
@@ -79,7 +110,6 @@ function App() {
           mixBlendMode: "difference"
         }}
       />
-      <Navbar isDarkMode={isDarkMode} onToggleTheme={handleToggleTheme} />
 
       <Suspense fallback={<Loader />}>
         <Routes>

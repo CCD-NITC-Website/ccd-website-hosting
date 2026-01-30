@@ -1,3 +1,11 @@
+:root {
+  --grayBorderColor: #ccc;
+  --textColor: #000000;
+  --errorColor: #ff6b6b;
+  --errorBg: rgba(255, 107, 107, 0.1);
+  --successColor: #4caf50;
+}
+
 .loginContainer {
   display: flex;
   width: 100vw;
@@ -17,37 +25,40 @@
   justify-content: center;
   flex-direction: column;
 }
+
 .AdminLogIn .mainHeading {
   color: var(--textColor);
   text-transform: uppercase;
 }
+
 .formLogIn {
   width: 80%;
 }
+
 .fillBoxInput {
   margin: 1.5rem 0;
   position: relative;
 }
-.fillBoxInput>input  {
+
+.fillBoxInput > input {
   width: 100%;
   padding: 0.8rem 0.75rem;
   background-color: transparent;
   border: none;
   outline: none;
   border-bottom: 1px solid var(--grayBorderColor);
-  color: white;
+  color: black;
   font-weight: 500;
   font-size: 1.15rem;
-  transition:all 0.25s ease;
+  transition: all 0.25s ease;
 }
-.fillBoxInput input:focus{
-    border-bottom: 1px solid var(--textColor);
+
+.fillBoxInput input:focus {
+  border-bottom: 1px solid var(--textColor);
 }
-.fillBoxInput p {
-  color: red;
-  text-align-last: right;
-  margin: 0.25rem 0.1rem;
-  display: none;
+
+.fillBoxInput.error input {
+  border-bottom: 1px solid var(--errorColor);
 }
 
 .fillBoxInput .eyeIcon {
@@ -55,11 +66,47 @@
   color: var(--grayBorderColor);
   right: 10px;
   top: 12px;
+  cursor: pointer;
 }
-.loginBtn {
+
+/* Messages */
+.error-message,
+.forgot-message {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.error-message {
+  color: var(--errorColor);
+  background-color: var(--errorBg);
+}
+
+.forgot-message {
+  color: var(--successColor);
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* BUTTON STYLES */
+.login-btn-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.loginBtn,
+.forgotBtn {
   padding: 1rem 1.5rem;
   width: 100%;
-  margin: 2rem 0;
   font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -67,36 +114,73 @@
   border: none;
   border-radius: 0.25rem;
   background-color: var(--textColor);
+  color: white;
+  transition: all 0.3s ease;
 }
 
+.loginBtn:hover,
+.forgotBtn:hover {
+  background-color: #3614ca;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 205, 175, 0.4);
+}
 
-/* responsive */
+.loginBtn:disabled,
+.forgotBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
-@media screen and (max-width:1025px) {
-  .AdminLogIn
-  {
+/* RESPONSIVE STYLES */
+@media screen and (max-width: 1025px) {
+  .AdminLogIn {
     width: 45%;
   }
 }
 
-@media screen and (max-width:769px) {
-  .AdminLogIn
-  {
+@media screen and (max-width: 769px) {
+  .AdminLogIn {
     width: 60%;
   }
 }
 
-@media screen and (max-width:426px) {
-  .AdminLogIn
-  {
+@media screen and (max-width: 426px) {
+  .AdminLogIn {
     width: 90%;
-  }.formLogIn {
-  width: 90%;
-}
-.loginBtn
-{
-  font-size: 0.85rem;
-  margin: 1rem 0;
+  }
+
+  .formLogIn {
+    width: 90%;
+  }
+
+  .loginBtn,
+  .forgotBtn {
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+  }
+
+  .login-btn-row {
+    flex-direction: column;
+  }
 }
 
+
+/* Add these styles to your existing CSS */
+.fillBoxInput .error-text {
+  color: var(--errorColor);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  text-align: right;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.fillBoxInput.error .error-text {
+  display: block;
+}
+
+.fillBoxInput.error input {
+  border-bottom: 1px solid var(--errorColor);
 }
